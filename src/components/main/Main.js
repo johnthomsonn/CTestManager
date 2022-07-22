@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import TestReports from "../reports/TestReports"
+import Tests from "../tests/Tests"
 import "./Main.css"
 
 const Main = props => {
@@ -10,6 +12,8 @@ const Main = props => {
         const oldTab = document.getElementById(`${activeTab}-tab`).classList.remove("active-tab")
         const newTab = document.getElementById(`${tabName}-tab`).classList.add("active-tab")
     }
+
+    
 
 return(<>
 
@@ -31,9 +35,9 @@ return(<>
         </div>
 
         <div className="main-window-content">
-            {activeTab === "" || activeTab === "tests" && <div>Showing Tests</div>}
+            {activeTab === "" || activeTab === "tests" && <Tests {...props} /> }
             {activeTab === "jobs" && <div>Showing Jobs</div>}
-            {activeTab === "reports" && <div>Showing Test Reports</div>}
+            {activeTab === "reports" && <TestReports {...props} />}
         </div>
     </div>
 

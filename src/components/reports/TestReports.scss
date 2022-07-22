@@ -1,0 +1,27 @@
+.test-reports-container {
+    background-color: white;
+    width:100%;
+    height:85vh;
+    border-radius: 10px;
+    padding:1rem;
+}
+
+.test-reports-explorer-container {
+    background-color: white;
+    height:570px;
+    width:20%;
+    padding:0.5rem;
+
+    .test-reports-explorer {
+        background-color: rgb(255, 220, 220);
+        height:500px;
+        padding:0.25rem;
+    }
+
+    .test-reports-explorer-buttons {
+        margin-top:0.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
