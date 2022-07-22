@@ -19,13 +19,30 @@
   overflow-x: auto;
   overflow-y: auto;
 }
-.test-reports-explorer-container .test-reports-explorer-buttons {
-  margin-top: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-}
 
+.treeview-category {
+  font-size: 0.92rem;
+}
 .treeview-category:hover {
   cursor: pointer;
   background-color: #ff9b9b;
+}
+
+.test-reports-content-container {
+  background-color: white;
+  width: 100%;
+  padding: 0.5rem;
+  height: 570px;
+}
+
+.test-reports-content {
+  margin-top: 1rem;
+}
+
+.test-reports-active {
+  border-bottom: 1px solid grey;
+}
+
+.active-report {
+  background-color: #f16565;
 }

@@ -6,7 +6,7 @@ const isDev = require('electron-is-dev')
 const { getFileStructure } = require("./methods/FileStructureMethods")
 const walkdir = require('walkdir')
 const dir = require("node-dir")
-
+const fs = require('fs')
 let mainWindow 
 
 const menuItems = [
@@ -154,6 +154,20 @@ app.on("ready",() => {
             console.log(e)
         }
     } )
+
+    ipcMain.on('get-test-report', async (event,filePath) => {
+        fs.readFile(filePath, (err,res) => {
+            if(err)
+            {
+                console.log(err)
+            }
+            else
+            {
+                console.log(res)
+                event.reply('test-report-contents',res)
+            }
+        })
+    })
 
 })
 
