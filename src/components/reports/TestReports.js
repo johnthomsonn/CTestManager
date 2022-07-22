@@ -1,5 +1,7 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import "./TestReports.css"
+import { MDBBtn, MDBScrollbar } from "mdb-react-ui-kit";
+import { MDBTreeview, MDBTreeviewItem } from 'mdb-react-treeview';
 const {ipcRenderer} = window.require('electron')
 
 const TestReports = props => {
@@ -7,28 +9,32 @@ const TestReports = props => {
     const [activeTestReport,setActiveTestReport] = useState(null)
     const [rootPath,setRootPath] = useState(null)
     const [loading,setLoading] = useState(true)
-    const [fileStructure,setFileStructure] = useState([])
+    const [fileStructure,setFileStructure] = useState(null)
 
-    const getFilesAndFolders = () => {
-        console.log("About to fetch files")
+    useEffect(() => {
+        getFilesAndFoldersForTestReports()
+    },[])
+
+    const getFilesAndFoldersForTestReports = () => {
         ipcRenderer.send("get-reports-explorer")
     }
 
     ipcRenderer.on('reports-explorer', (event,data,root) => {
         setFileStructure(data)
         setRootPath(root)
-        console.log(root)
         setLoading(false)
     })
 
     const displayTree = () => {
         if(fileStructure.length === 0) return "No files yet"
         
-        return fileStructure.map(filePath => {
-            return <div>
-                {filePath.replace(rootPath+"\\","")}
-            </div>
-        })
+
+        return(<><MDBTreeview> 
+                    {fileStructure.map(filePath => {
+                        return <MDBTreeviewItem name={filePath.replace(rootPath+"\\","")} />
+                    })}
+                </MDBTreeview>
+        </>)
     }
 
     return (<>
@@ -36,15 +42,25 @@ const TestReports = props => {
         <div className="test-reports-container">
             <div className="test-reports-explorer-container">
                 <div className="test-reports-explorer">
-                    {/* {getFilesAndFolders()} */}
                     {loading && "Fetching Files..."}
                     {!loading && displayTree()}
+
+
+
                 </div>
                 <div className="test-reports-explorer-buttons">
                 </div>
-        <button onClick={getFilesAndFolders}>fetch files</button>
             </div>
             
+            <div className="test-reports-content">
+
+  
+       
+
+
+
+
+            </div>
 
         </div>
     

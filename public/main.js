@@ -108,7 +108,8 @@ const createWindow = () => {
     mainWindow.loadURL(isDev ? "http://localhost:3000" : path.join(__dirname, "../build/index.html") )
     exports.mainWindow
 }
-const root = "C:\\Users\\JT\\Desktop\\dev\\electron\\testfiles"
+const testsRoot = "C:\\Users\\JT\\Desktop\\dev\\electron\\testfiles"
+const reportsRoot = "C:\\Users\\JT\\Desktop\\dev\\electron\\results"
 app.on("ready",() => {
 
     createWindow()
@@ -121,30 +122,28 @@ app.on("ready",() => {
     })
 
     ipcMain.on("get-reports-explorer", async (event) => {
-        /*
-        console.log("\n"+root+"\n")
-        walkdir("C:\\Users\\JT\\Desktop\\dev\\electron\\testfiles\\", {})
-        .on('file', (fn, stat) => {
-            mainWindow.webContents.send('file', fn.slice(rootdir.length + 1), stat);
-        })
-        .on('directory', (fn, stat) => {
-            mainWindow.webContents.send('directory', fn.slice(rootdir.length + 1), stat);
-        })
-        .on('error', (fn, err) => {
-            console.error(`!!!! ${fn} ${err}`);
-        });
-                //event.reply('reports-explorer', sctructure)
-           */
           try {
-          let allFiles = null
-          dir.promiseFiles(root)
+          dir.promiseFiles(reportsRoot)
             .then(files => {
-                console.log('processing content of file', files);
-                allFiles = files
+                if(files)
+                    event.reply('reports-explorer', files,reportsRoot) 
             })
-            .then(() => {
-                if(allFiles)
-                    event.reply('reports-explorer', allFiles.sort(),root)  
+            .catch(err => {
+                console.log(err)
+            })
+        }
+        catch(e)
+        {
+            console.log(e)
+        }
+    } )
+
+    ipcMain.on("get-tests-explorer", async (event) => {
+          try {
+          dir.promiseFiles(testsRoot)
+            .then(files => {
+                if(files)
+                    event.reply('reports-explorer', files.sort(),testsRoot) 
             })
             .catch(err => {
                 console.log(err)

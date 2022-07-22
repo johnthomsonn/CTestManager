@@ -18,7 +18,8 @@
     "wait-on": "^6.0.1",
     "walkdir": "^0.4.1",
     "web-vitals": "^2.1.4",
-    "mdb-react-treeview": "./plugins/treetable.tgz"
+    "mdb-react-treeview": "./plugins/treeview.tgz",
+    "mdb-react-ui-kit" : "./node_modules/mdb-react-ui-kit-4.1.0"
   },
   "devDependencies": {
     "electron": "^19.0.8",
