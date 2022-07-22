@@ -6,7 +6,7 @@ const Main = props => {
 return(<>
 
 
-Main
+Mains
 
 </>)
 

@@ -1,5 +1,6 @@
 const {Menu, shell, BrowserWindow} = require("electron")
 const path = require("path")
+const {mainWindow} = require("../main")
 const menuItems = [
     {
         label : "File",
@@ -37,7 +38,38 @@ const menuItems = [
         label : "About",
         submenu : [
             {
-                label : "Version Information"
+                label : "Information",
+                click : async () => {
+                    const aboutWindow = new BrowserWindow({
+                        width:300,
+                        height:300,
+                        resizable : false,
+                        movable : false,
+                        parent : mainWindow,
+                        modal : true,
+                        show: false,
+                        devTools : true,
+                        title: "About",
+                        webPreferences : {
+                            preload : path.join(__dirname, "../aboutWindowPreload.js")
+                        }
+                    })
+                    aboutWindow.loadURL("http://localhost:3000/about")
+                    aboutWindow.setMenu(null)
+                    aboutWindow.once("ready-to-show", aboutWindow.show())
+                }
+
+            }
+        ]
+    },
+    {
+        label : "Dev",
+        submenu : [
+            {
+                label : "Open Dev Tools",
+                click : async () => {
+                    mainWindow.webContents.openDevTools()
+                }
             }
         ]
     }
