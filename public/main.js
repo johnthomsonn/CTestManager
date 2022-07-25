@@ -156,14 +156,13 @@ app.on("ready",() => {
     } )
 
     ipcMain.on('get-test-report', async (event,filePath) => {
-        fs.readFile(filePath, (err,res) => {
+        fs.readFile(filePath, "utf-8", (err,res) => {
             if(err)
             {
                 console.log(err)
             }
             else
             {
-                console.log(res)
                 event.reply('test-report-contents',res)
             }
         })

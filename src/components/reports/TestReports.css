@@ -37,6 +37,8 @@
 
 .test-reports-content {
   margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
 }
 
 .test-reports-active {
@@ -45,4 +47,65 @@
 
 .active-report {
   background-color: #f16565;
+}
+
+.parameters-list-container {
+  overflow-y: auto;
+  overflow-x: auto;
+  height: 280px;
+}
+
+.parameters-container {
+  background-color: white;
+  width: 100%;
+  padding: 0.25rem;
+  box-shadow: 0 0 2px 2px #b8b7b7;
+  border-radius: 10px;
+  height: 300px;
+}
+
+.sub-title {
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.parameter-item {
+  background-color: inherit;
+  display: flex;
+  border-bottom: 1px solid black;
+  justify-content: space-between;
+}
+.parameter-item .parameter-item-param {
+  width: 50%;
+  background-color: inherit;
+}
+.parameter-item .parameter-item-value {
+  margin-left: 0.5rem;
+}
+
+.test-report-overview-container {
+  background-color: inherit;
+  height: 150px;
+  margin-top: 1rem;
+}
+
+.left-side {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: 460px;
+}
+
+.right-side {
+  background-color: white;
+  width: 100%;
+  margin-lefT: 1.5rem;
+}
+
+.green {
+  background-color: greenyellow;
+}
+
+.red {
+  background-color: #eb5252;
 }
