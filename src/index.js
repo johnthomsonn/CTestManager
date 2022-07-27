@@ -4,11 +4,14 @@ import './index.css';
 import "mdb-react-treeview/dist/css/treeview.min.css"
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ErrorBoundary from './components/errorboundary/ErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ErrorBoundary >
+      <App />
+    </ErrorBoundary>
   </React.StrictMode>
 );
 

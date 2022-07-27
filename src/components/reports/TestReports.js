@@ -111,9 +111,9 @@ const TestReports = props => {
 
     const displayParameterList = () => {
         if(!parameters) return
-        return parameters.map(param => {
+        return parameters.map((param,i) => {
             return (<>
-            <div className="parameter-item">
+            <div className="parameter-item" key={i}>
                 <div className="parameter-item-param">{param.Param}</div>
                 <div className="parameter-item-value">{param.Value}</div>
             </div>
@@ -159,8 +159,8 @@ const TestReports = props => {
         <div className="test-reports-container">
             <div className="test-reports-explorer-container">
                 <div className="test-reports-explorer">
-                    {loading && "Fetching Files..."}
-                    {!loading && displayTree()}
+                    {loading ? "Fetching Files..." : displayTree()}
+                    
 
 
 
