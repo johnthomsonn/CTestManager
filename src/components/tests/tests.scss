@@ -37,3 +37,15 @@
         margin-top:1rem;
     }
 }
+.path-item {
+    height:30px;
+    padding:0.25rem;
+    &:hover {
+        cursor: pointer;
+        background-color: aliceblue;
+    }
+}
+
+.active-path-item {
+    background-color: rgb(190, 238, 238);
+}
