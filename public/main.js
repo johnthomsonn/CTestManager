@@ -7,6 +7,7 @@ const { getFileStructure } = require("./methods/FileStructureMethods")
 const walkdir = require('walkdir')
 const dir = require("node-dir")
 const fs = require('fs')
+const spawn = require('child_process').spawn
 let mainWindow 
 
 const menuItems = [
@@ -166,6 +167,16 @@ app.on("ready",() => {
                 event.reply('test-report-contents',res)
             }
         })
+    })
+
+    ipcMain.on('run-test', async (event,path) => {
+        try {
+            spawn('python', [path])
+
+        }
+        catch(e) {
+            console.log(e)
+        }
     })
 
 })

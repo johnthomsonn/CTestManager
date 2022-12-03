@@ -57,7 +57,7 @@ const Tests = props => {
 
     const runTest = () => {
         if(!activeTest) return
-        alert(activeTest.path)
+        ipcRenderer.send('run-test', activeTest.path)
     }
 
     return (<>
