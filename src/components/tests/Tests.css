@@ -48,3 +48,13 @@
 .active-path-item {
   background-color: #beeeee;
 }
+
+.active-test-container {
+  background-color: inherit;
+  width: 100%;
+  padding: 1rem;
+}
+
+.active-test-header {
+  border-bottom: 1px solid black;
+}

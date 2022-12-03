@@ -40,9 +40,24 @@ const Tests = props => {
         if(!fileStructure) return
 
         return fileStructure.map((path,i) => {
-            const pathId = path.replace(rootPath+"\\","")
+            const pathId = removeRootPathFromPath(path)
             return <div id={pathId} className="path-item" onClick={() => clickPathItem(pathId,path)}>{pathId}</div>
         })
+    }
+
+    const displayActiveTestHeader = () => {
+        if(!activeTest) return
+        const displayName = removeRootPathFromPath(activeTest.path)
+        return displayName
+    }
+
+    const removeRootPathFromPath = (path) => {
+        return path?.replace(rootPath+"\\", "")
+    }
+
+    const runTest = () => {
+        if(!activeTest) return
+        alert(activeTest.path)
     }
 
     return (<>
@@ -54,10 +69,15 @@ const Tests = props => {
                 </div>
                 <div className="test-reports-explorer-buttons">
                     <button className="set-global-param-btn">Set global param</button>
-                    <button className="set-active-test-btn">Run Test</button>
+                    <button className="set-active-test-btn" onClick={runTest}>Run Test</button>
                 </div>
             </div>
             
+            <div className="active-test-container">
+                <div className="active-test-header">
+                    Active Test: {displayActiveTestHeader()}
+                </div>
+            </div>
 
         </div>
     

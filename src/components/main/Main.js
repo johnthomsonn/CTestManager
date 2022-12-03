@@ -5,7 +5,7 @@ import "./Main.css"
 
 const Main = props => {
 
-    const [activeTab,setActiveTab] = useState("reports")
+    const [activeTab,setActiveTab] = useState("tests")
 
     const changeTab = tabName => {
         setActiveTab(tabName)
