@@ -1,0 +1,39 @@
+.test-reports-explorer-buttons {
+    margin-top:1rem;
+    display:flex;
+    justify-content: space-between;
+}
+
+.set-global-param-btn {
+    background-color:green;
+    color:white;
+    border: none;
+    border-radius: 20px;
+
+    &:hover {
+        background-color: rgb(0, 94, 0);
+    }
+}
+
+.set-active-test-btn {
+    background-color:rgb(241, 112, 107);
+    color:black;
+    border: none;
+    border-radius: 20px;
+
+    &:hover {
+        background-color: rgb(184, 76, 73);
+    }
+}
+
+.test-container {
+    width:80%;
+    padding:0.5rem;
+    .test-active {
+        border-bottom:1px solid black;
+        width:100%;
+    }
+    .test-active-info {
+        margin-top:1rem;
+    }
+}

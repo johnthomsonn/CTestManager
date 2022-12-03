@@ -143,7 +143,7 @@ app.on("ready",() => {
           dir.promiseFiles(testsRoot)
             .then(files => {
                 if(files)
-                    event.reply('reports-explorer', files.sort(),testsRoot) 
+                    event.reply('tests-explorer', files.sort(),testsRoot) 
             })
             .catch(err => {
                 console.log(err)

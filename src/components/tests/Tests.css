@@ -1,0 +1,37 @@
+.test-reports-explorer-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.set-global-param-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 20px;
+}
+.set-global-param-btn:hover {
+  background-color: #005e00;
+}
+
+.set-active-test-btn {
+  background-color: #f1706b;
+  color: black;
+  border: none;
+  border-radius: 20px;
+}
+.set-active-test-btn:hover {
+  background-color: #b84c49;
+}
+
+.test-container {
+  width: 80%;
+  padding: 0.5rem;
+}
+.test-container .test-active {
+  border-bottom: 1px solid black;
+  width: 100%;
+}
+.test-container .test-active-info {
+  margin-top: 1rem;
+}

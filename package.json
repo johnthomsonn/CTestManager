@@ -17,12 +17,10 @@
     "react-scripts": "5.0.1",
     "wait-on": "^6.0.1",
     "walkdir": "^0.4.1",
-    "web-vitals": "^2.1.4",
-    "mdb-react-treeview": "./plugins/treeview.tgz",
-    "mdb-react-ui-kit" : "./node_modules/mdb-react-ui-kit-4.1.0"
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "electron": "^19.0.8",
+    "electron": "^22.0.0",
     "electron-builder": "^23.1.0"
   },
   "main": "public/main.js",

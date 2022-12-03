@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from "react"
 import "./TestReports.css"
-import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
-import { MDBTreeview, MDBTreeviewItem } from 'mdb-react-treeview';
 const {ipcRenderer,shell} = window.require('electron')
 
 const TestReports = props => {
 
     const [activeTestReportPath,setActiveTestReportPath] = useState(null)
-    const [activeTestReportRaw,setActiveTestReportRaw] = useState(null)
     const [activeTestReportXML,setActiveTestReportXML] = useState(null)
     const [activeTestReportId, setActiveTestReportId] = useState(null)
     const [rootPath,setRootPath] = useState(null)
@@ -23,14 +20,15 @@ const TestReports = props => {
 
     useEffect(() => {
         getFilesAndFoldersForTestReports() 
+        return () => unmount()
     },[])
 
-    useEffect(() => {
-        readReportXML() 
+    // useEffect(() => {
+    //     readReportXML() 
  
-        return () => unmount() 
+    //     return () => unmount() 
 
-    }, activeTestReportRaw) 
+    // }, activeTestReportRaw) 
 
     const unmount = () => {
         setTotalFails(null) 
@@ -38,7 +36,7 @@ const TestReports = props => {
         setTotalPasses(null) 
     }
 
-    const readReportXML = () => {
+    const readReportXML = (activeTestReportRaw) => {
         if(!activeTestReportRaw) return  
         const xml = new DOMParser().parseFromString(activeTestReportRaw, "text/xml")
         setActiveTestReportXML(xml)
@@ -56,6 +54,7 @@ const TestReports = props => {
             
                 paramObj.Param = param.getAttribute("Param")
                 paramObj.Value = param.getAttribute("Value")  
+                paramObj.Type = param.getAttribute("type")
                 allParameters.push(paramObj)
             }
             
@@ -78,7 +77,7 @@ const TestReports = props => {
     })
 
     ipcRenderer.on('test-report-contents', (event,fileContents) => {
-        setActiveTestReportRaw(fileContents)
+        readReportXML(fileContents)
         
     })  
 
@@ -100,14 +99,22 @@ const TestReports = props => {
         if(fileStructure.length === 0) return "No files yet"
         
 
-        return(<><MDBTreeview> 
-                    {fileStructure.map((filePath,i) => {
-                        return <MDBTreeviewItem name={filePath.replace(rootPath+"\\","")} id={`filepath${i}`} onClick={() => explorerReportClick(filePath,i)} />
-                    })}
-                </MDBTreeview>
+        return(<><div>s
+                    {/* {fileStructure.map((filePath,i) => {
+                        
+                        return <div id={`filepath${i}`} onClick={() => explorerReportClick(filePath,i)}>{filePath.replace(rootPath+"\\","")}</div>
+                    })} */}
+                </div>
         </>)
     }
 
+    const getDictValues = (dict) => {
+        const dictStr = `"${dict}"`
+        const dictObj = JSON.parse(dictStr)
+        const keys = Object.keys(dictObj)
+        
+        //console.log(dictObj)
+    }
 
     const displayParameterList = () => {
         if(!parameters) return
@@ -115,7 +122,8 @@ const TestReports = props => {
             return (<>
             <div className="parameter-item" key={i}>
                 <div className="parameter-item-param">{param.Param}</div>
-                <div className="parameter-item-value">{param.Value}</div>
+                    {/* {param.Type && param.Type === "dict" ? getDictValues(param.Value) : <div className="parameter-item-value">{param.Value}</div>} */}
+                    <div className="parameter-item-value">{param.Value}</div>
             </div>
                 
             </>)
@@ -174,7 +182,7 @@ const TestReports = props => {
                 <div className="test-reports-active">
                     Active Report: {activeTestReportPath ? activeTestReportPath.replace(rootPath+"\\","") : ""}
                 </div>
-       
+      
 
                 <div className="test-reports-content">
                     {activeTestReportPath && readingReport && <span>Reading Report...</span>}
@@ -202,7 +210,7 @@ const TestReports = props => {
                                     Total Infos: {getValueFromParameter("infos")}
                                 </div>
                                 <div className="test-overview-fails">
-                                    Total Fails: {getValueFromParameter("fails")}
+                                    Total Fails: {getValueFromParameter("total_fails")}
                                 </div>
                                 <div className="test-overview-result" id="result">
                                     Overall Result: {determineOverallResult()}
