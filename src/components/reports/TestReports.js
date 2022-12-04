@@ -84,13 +84,13 @@ const TestReports = props => {
     const explorerReportClick = (filepath,i) => {
         
         setActiveTestReportPath(filepath)
-        /*
+        
         setActiveTestReportId(`filepath${i}`)
         document.getElementById(`filepath${i}`).classList.add('active-report')
         if(activeTestReportId)
             document.getElementById(activeTestReportId).classList.remove('active-report')
-            */
-           ipcRenderer.send('get-test-report', filepath)
+            
+        ipcRenderer.send('get-test-report', filepath)
 
         
     }
@@ -100,10 +100,10 @@ const TestReports = props => {
         
 
         return(<><div>s
-                    {/* {fileStructure.map((filePath,i) => {
+                    {fileStructure.map((filePath,i) => {
                         
                         return <div id={`filepath${i}`} onClick={() => explorerReportClick(filePath,i)}>{filePath.replace(rootPath+"\\","")}</div>
-                    })} */}
+                    })}
                 </div>
         </>)
     }
