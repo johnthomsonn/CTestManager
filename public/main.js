@@ -179,6 +179,17 @@ app.on("ready",() => {
         }
     })
 
+    ipcMain.on('get-files-in-folder', async (event,folder) => {
+        try{
+            const files = fs.readdirSync(folder)
+            event.reply('files-in-folder', files)            
+        }
+        catch(e) 
+        {
+            console.log(e)
+        }
+    })
+
 })
 
 app.on('window-all-closed', () => {

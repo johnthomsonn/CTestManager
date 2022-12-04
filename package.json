@@ -17,7 +17,9 @@
     "react-scripts": "5.0.1",
     "wait-on": "^6.0.1",
     "walkdir": "^0.4.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "MDBTreeview" : "./plugins/treeview.tgz",
+    "mdb-react-ui-kit" : "./plugins/mdb-react-ui-kit-4.1.0.tgz"
   },
   "devDependencies": {
     "electron": "^22.0.0",

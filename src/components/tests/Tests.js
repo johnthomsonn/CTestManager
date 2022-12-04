@@ -1,5 +1,8 @@
+
 import React, {useState, useEffect} from "react"
 import "./Tests.css"
+import {MDBTreeview,MDBTreeviewItem} from "MDBTreeview"
+import "./tview.css"
 const {ipcRenderer,shell} = window.require('electron')
 
 const Tests = props => {
@@ -36,13 +39,63 @@ const Tests = props => {
         setRootPath(rootPath)
     }) 
 
-    const displayExplorer = () => {
-        if(!fileStructure) return
+    const isFile = pathname => {
+        return pathname.split("/").pop().indexOf('.') > -1
+    }
 
-        return fileStructure.map((path,i) => {
-            const pathId = removeRootPathFromPath(path)
-            return <div id={pathId} className="path-item" onClick={() => clickPathItem(pathId,path)}>{pathId}</div>
+    const displayExplorer = () => {
+        if(!fileStructure) return 
+        let newPaths = {}
+        let topPath = [...fileStructure]
+
+        // loop over each path in the filestructure and separate out
+        topPath.map(element => { 
+            let strippedPath = removeRootPathFromPath(element)
+            let s = strippedPath.split("\\")
+            if(newPaths.hasOwnProperty(s.length))
+            {
+                newPaths[`${s.length}`].push(s)
+            }
+            else
+            {
+                newPaths[`${s.length}`] = [s]
+            }
+        });
+        
+
+        
+        {/* loop over each key in the newPaths object and create sub elements */}
+        let newPathKeys = Object.keys(newPaths).reverse()
+        return newPathKeys.map(k => { 
+            
+            let items = createItems(newPaths[k])
+            return items.map(i => i)
         })
+
+
+
+        
+           
+
+        // return topPath.map((path,i) => {
+        //     const pathId = removeRootPathFromPath(path)
+        //     return <div id={pathId} className="path-item" onClick={() => clickPathItem(pathId,path)}>{pathId}</div>
+        // })
+    }
+
+    const createItems = arr => {
+        let len = arr.length
+        console.log(arr) 
+        let elements = []
+        for(var i =0; i < len;i++)
+        {
+            
+            let ul = document.createElement("ul")
+            ul.appendChild(document.createTextNode(arr[i]))
+            elements.push(ul) 
+        }
+        
+        return elements
     }
 
     const displayActiveTestHeader = () => {
@@ -64,8 +117,10 @@ const Tests = props => {
     
         <div className="test-reports-container">
             <div className="test-reports-explorer-container">
-                <div className="test-reports-explorer">
-                    {displayExplorer()}
+                <div className="test-reports-explorer" id="explorer">
+                     {displayExplorer() }
+
+                     
                 </div>
                 <div className="test-reports-explorer-buttons">
                     <button className="set-global-param-btn">Set global param</button>
@@ -86,3 +141,38 @@ const Tests = props => {
 }
 
 export default Tests
+
+
+
+
+
+
+
+
+
+
+
+/*
+<hr />
+                    <MDBTreeview openOnItemClick={false}>
+                <MDBTreeviewItem name='One' />
+                <MDBTreeviewItem name='Two' />
+                <MDBTreeviewItem subtree name='Three' show>
+                    <MDBTreeviewItem name='Second-one' />
+                    <MDBTreeviewItem name='Second-two' />
+                    <MDBTreeviewItem name='Second-three' subtree>
+                    <MDBTreeviewItem name='Third-one' subtree>
+                        <MDBTreeviewItem name='Fourth-one' />
+                        <MDBTreeviewItem name='Fourth-two' />
+                        <MDBTreeviewItem name='Fourth-three' />
+                    </MDBTreeviewItem>
+                    <MDBTreeviewItem name='Third-two' />
+                    <MDBTreeviewItem name='Third-three' subtree>
+                        <MDBTreeviewItem name='Fourth-one' />
+                        <MDBTreeviewItem name='Fourth-two' />
+                        <MDBTreeviewItem name='Fourth-three' />
+                    </MDBTreeviewItem>
+                    </MDBTreeviewItem>
+                </MDBTreeviewItem>
+            </MDBTreeview>
+*/
