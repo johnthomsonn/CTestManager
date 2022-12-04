@@ -99,13 +99,13 @@ const TestReports = props => {
         if(fileStructure.length === 0) return "No files yet"
         
 
-        return(<><div>s
+        return(<div>
                     {fileStructure.map((filePath,i) => {
                         
                         return <div id={`filepath${i}`} onClick={() => explorerReportClick(filePath,i)}>{filePath.replace(rootPath+"\\","")}</div>
                     })}
                 </div>
-        </>)
+        )
     }
 
     const getDictValues = (dict) => {
