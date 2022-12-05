@@ -1,8 +1,6 @@
 
 import React, {useState, useEffect} from "react"
 import "./Tests.css"
-import {MDBTreeview,MDBTreeviewItem} from "MDBTreeview"
-import "./tview.css"
 const {ipcRenderer,shell} = window.require('electron')
 
 const Tests = props => {
