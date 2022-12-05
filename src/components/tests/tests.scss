@@ -59,3 +59,35 @@
 .active-test-header {
     border-bottom: 1px solid black;
 }
+
+.path-header {
+    text-decoration: underline;
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(248, 214, 214);
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+ul {
+    padding-left:1rem;
+    list-style-type: disc;
+    margin-bottom:10px;
+    li {
+        margin-left: 1rem;
+        height:20px;
+        &:hover {
+            cursor: pointer;
+            background-color: rgb(247, 220, 195);
+        }
+    }
+}
+
+

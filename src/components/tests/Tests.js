@@ -48,38 +48,60 @@ const Tests = props => {
         let newPaths = {}
         let topPath = [...fileStructure]
 
-        // loop over each path in the filestructure and separate out
-        topPath.map(element => { 
-            let strippedPath = removeRootPathFromPath(element)
-            let s = strippedPath.split("\\")
-            if(newPaths.hasOwnProperty(s.length))
+        let updatedPaths = topPath.map(p => removeRootPathFromPath(p))
+
+        let obj = {}
+        let single = []
+
+           
+        updatedPaths.map(path => {
+            let s= path.split("\\") 
+            var removedFile = s.pop()
+            if(s.length > 0) 
             {
-                newPaths[`${s.length}`].push(s)
+                
+                let combinedStartPath = s.join('/') 
+                if(obj.hasOwnProperty(combinedStartPath))
+                {
+                    obj[combinedStartPath].push(removedFile)
+                }
+                else
+                {
+                    obj[combinedStartPath] = [removedFile]
+                }
             }
             else
             {
-                newPaths[`${s.length}`] = [s]
+                if(obj.hasOwnProperty(" "))
+                {
+                    obj[" "].push(removedFile)
+                }
+                else
+                {
+                    obj[" "] = [removedFile]
+                }
             }
-        });
-        
-
-        
-        {/* loop over each key in the newPaths object and create sub elements */}
-        let newPathKeys = Object.keys(newPaths).reverse()
-        
-        
-        return newPathKeys.map(k => { 
-            let items = createItems(newPaths[k]) 
-            //return items
-            return items.map(i => {
-                return <div>{i}</div> 
-            })
         })
 
-
-
         
-           
+        // return single.map(file => {
+        //     return <ul key={file}><li>{file}</li></ul>
+        // })
+        return Object.keys(obj).map(path => {
+            let s = path.split("/")
+
+            
+            
+            return <ul>
+                <span  className="path-header" id={path} onClick={() => pathHeaderClick(path)}> {path}</span>
+                
+                <ul className={path}>
+                {obj[path].map(file => {
+                    return <li onClick={() => setTest(path,file)} id={`${path}/${file}`}  >{file}</li>
+                })}
+                </ul>
+            </ul>
+        })
 
         // return topPath.map((path,i) => {
         //     const pathId = removeRootPathFromPath(path)
@@ -87,34 +109,37 @@ const Tests = props => {
         // })
     }
 
-    const createItems = arr => {
-        let len = arr.length
-        let elements = []
-        //  console.log(arr)   
-        for(var i =0; i < len-1;i++)
-        {
-            let tmpArr = arr[i]
-            for(var j =0;j < tmpArr.length-1;j++)
-            {
-                var ul = document.createElement("ul")
-                console.log(tmpArr[i])
-                ul.appendChild(document.createTextNode(tmpArr[i]))
-                elements.push(ul)  
-            }
-            let li = document.createElement('li')
-            if(li)
-                li.appendChild(document.createTextNode(tmpArr[tmpArr.length-1])) 
-                ul.appendChild(li)  
- 
-        } 
-        console.log(elements)
-        
-        return elements
+    const setTest = (path,file) => {
+        let fullPath = path+"/"+file
+        setActiveTest(fullPath)
+
+        if(activeTest)
+            document.getElementById(activeTest).classList.remove("active-path-item")
+        document.getElementById(fullPath).classList.add('active-path-item')
     }
+
+    const pathHeaderClick = (id) => {
+        const pathHeader = document.getElementById(id)
+        
+        let children = document.getElementsByClassName(id)
+        Object.values(children).map(el => {
+            if(el.classList.contains("hide"))
+            {
+                el.classList.remove("hide")
+                el.classList.add("show")
+            }
+            else
+            {
+                el.classList.add("hide")
+                el.classList.remove("show")
+            }
+        })
+    }
+    
 
     const displayActiveTestHeader = () => {
         if(!activeTest) return
-        const displayName = removeRootPathFromPath(activeTest.path)
+        const displayName = removeRootPathFromPath(activeTest)
         return displayName
     }
 
@@ -124,7 +149,7 @@ const Tests = props => {
 
     const runTest = () => {
         if(!activeTest) return
-        ipcRenderer.send('run-test', activeTest.path)
+        ipcRenderer.send('run-test', activeTest)
     }
 
     return (<>
@@ -136,6 +161,9 @@ const Tests = props => {
 
                      
                 </div>
+                <ul>
+                    
+                </ul>
                 <div className="test-reports-explorer-buttons">
                     <button className="set-global-param-btn">Set global param</button>
                     <button className="set-active-test-btn" onClick={runTest}>Run Test</button>

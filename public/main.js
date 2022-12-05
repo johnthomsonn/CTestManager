@@ -171,7 +171,9 @@ app.on("ready",() => {
 
     ipcMain.on('run-test', async (event,path) => {
         try {
-            spawn('python', [path])
+            const combinedPath = testsRoot + "/"+ path.trim()
+            console.log(combinedPath)
+            spawn('python', [combinedPath])
 
         }
         catch(e) {
