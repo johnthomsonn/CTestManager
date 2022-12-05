@@ -66,10 +66,14 @@ const Tests = props => {
         
         {/* loop over each key in the newPaths object and create sub elements */}
         let newPathKeys = Object.keys(newPaths).reverse()
+        
+        
         return newPathKeys.map(k => { 
-            
-            let items = createItems(newPaths[k])
-            return items.map(i => i)
+            let items = createItems(newPaths[k]) 
+            //return items
+            return items.map(i => {
+                return <div>{i}</div> 
+            })
         })
 
 
@@ -85,15 +89,25 @@ const Tests = props => {
 
     const createItems = arr => {
         let len = arr.length
-        console.log(arr) 
         let elements = []
-        for(var i =0; i < len;i++)
+        //  console.log(arr)   
+        for(var i =0; i < len-1;i++)
         {
-            
-            let ul = document.createElement("ul")
-            ul.appendChild(document.createTextNode(arr[i]))
-            elements.push(ul) 
-        }
+            let tmpArr = arr[i]
+            for(var j =0;j < tmpArr.length-1;j++)
+            {
+                var ul = document.createElement("ul")
+                console.log(tmpArr[i])
+                ul.appendChild(document.createTextNode(tmpArr[i]))
+                elements.push(ul)  
+            }
+            let li = document.createElement('li')
+            if(li)
+                li.appendChild(document.createTextNode(tmpArr[tmpArr.length-1])) 
+                ul.appendChild(li)  
+ 
+        } 
+        console.log(elements)
         
         return elements
     }
