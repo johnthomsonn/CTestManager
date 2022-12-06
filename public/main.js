@@ -192,6 +192,34 @@ app.on("ready",() => {
         }
     })
 
+    ipcMain.on('read-file-contents', async (event,path) => {
+        try {
+            
+            const contents = fs.readFile(`${testsRoot}/${path.trim()}`, 'utf-8', (err,contents) => {
+                if(err)
+                {
+                    console.log(err)
+                }
+                else
+                {
+                    const lines = []
+                    contents.split(/\r?\n/).forEach(line => {
+                        lines.push(line)
+                    })
+    
+                    event.reply('file-contents',lines)
+                    fs.close(1)
+
+                }
+            });
+            
+        }
+        catch(e)
+        {
+            console.log(e)
+        }
+    })
+
 })
 
 app.on('window-all-closed', () => {

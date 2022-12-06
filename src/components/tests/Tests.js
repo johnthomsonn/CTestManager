@@ -9,11 +9,25 @@ const Tests = props => {
     const [activeTest,setActiveTest] = useState(null)
     const [fileStructure,setFileStructure] = useState(null)
     const [rootPath,setRootPath] = useState(null)
+    const [fileContents,setFileContents] = useState(null)
 
     useEffect(() => {
         getFilesAndFoldersForTestReports() 
         return () => unmount()
     },[])
+
+    useEffect(() => {
+        if(activeTest)
+            readFileContents()
+    }, [activeTest])
+
+    const readFileContents = () => {
+        ipcRenderer.send('read-file-contents', activeTest)
+    }
+
+    ipcRenderer.on('file-contents', (event,contents) => {
+        setFileContents(contents)
+    })
 
     const getFilesAndFoldersForTestReports = () => {
         ipcRenderer.send("get-tests-explorer")
@@ -37,8 +51,12 @@ const Tests = props => {
         setRootPath(rootPath)
     }) 
 
-    const isFile = pathname => {
-        return pathname.split("/").pop().indexOf('.') > -1
+
+    const displayFileContents = () => {
+        if(!fileContents) return 
+        return fileContents.map(line => {
+            return <div className="l">{line}</div>
+        })
     }
 
     const displayExplorer = () => {
@@ -159,9 +177,6 @@ const Tests = props => {
 
                      
                 </div>
-                <ul>
-                    
-                </ul>
                 <div className="test-reports-explorer-buttons">
                     <button className="set-global-param-btn">Set global param</button>
                     <button className="set-active-test-btn" onClick={runTest}>Run Test</button>
@@ -171,6 +186,9 @@ const Tests = props => {
             <div className="active-test-container">
                 <div className="active-test-header">
                     Active Test: {displayActiveTestHeader()}
+                </div>
+                <div className="active-test-contents">
+                    {fileContents && displayFileContents()}
                 </div>
             </div>
 

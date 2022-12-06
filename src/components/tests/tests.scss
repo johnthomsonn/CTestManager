@@ -51,9 +51,8 @@
 }
 
 .active-test-container {
-    background-color: inherit;
+    background-color: white;
     width:100%;
-    padding:1rem;
 }
 
 .active-test-header {
@@ -90,4 +89,10 @@ ul {
     }
 }
 
+
+.active-test-contents {
+    width:90%;
+    background-color: white;
+    word-wrap: break-word;
+}
 

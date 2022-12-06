@@ -50,9 +50,8 @@
 }
 
 .active-test-container {
-  background-color: inherit;
+  background-color: white;
   width: 100%;
-  padding: 1rem;
 }
 
 .active-test-header {
@@ -87,4 +86,10 @@ ul li {
 ul li:hover {
   cursor: pointer;
   background-color: #f7dcc3;
+}
+
+.active-test-contents {
+  width: 90%;
+  background-color: white;
+  word-wrap: break-word;
 }
