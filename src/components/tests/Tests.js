@@ -54,8 +54,8 @@ const Tests = props => {
 
     const displayFileContents = () => {
         if(!fileContents) return 
-        return <textarea className="file-contents-textarea" value={fileContents.join("\n")}>
-        </textarea>
+        return <code> <textarea className="file-contents-textarea" value={fileContents.join("\n")}>
+        </textarea></code>
         // return fileContents.map(line => {
         //     return <div className="l" contentEditable>{line}</div>
         // })
