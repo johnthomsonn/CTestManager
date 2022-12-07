@@ -10,6 +10,7 @@ const Tests = props => {
     const [fileStructure,setFileStructure] = useState(null)
     const [rootPath,setRootPath] = useState(null)
     const [fileContents,setFileContents] = useState(null)
+    const [testOutput, setTestOutput] = useState(null)
 
     useEffect(() => {
         getFilesAndFoldersForTestReports() 
@@ -44,6 +45,7 @@ const Tests = props => {
 
     const unmount = () => {
         setActiveTest(null)
+        setTestOutput(null)
     }
 
     ipcRenderer.on('tests-explorer', (event,structure,rootPath) => {
@@ -54,11 +56,8 @@ const Tests = props => {
 
     const displayFileContents = () => {
         if(!fileContents) return 
-        return <code> <textarea className="file-contents-textarea" value={fileContents.join("\n")}>
+        return <code> <textarea className="file-contents-textarea" value={fileContents.join("\n")}  >
         </textarea></code>
-        // return fileContents.map(line => {
-        //     return <div className="l" contentEditable>{line}</div>
-        // })
     }
 
     const displayExplorer = () => {
@@ -102,14 +101,8 @@ const Tests = props => {
         })
 
         
-        // return single.map(file => {
-        //     return <ul key={file}><li>{file}</li></ul>
-        // })
         return Object.keys(obj).map(path => {
             let s = path.split("/")
-
-            
-            
             return <ul>
                 <span  className="path-header" id={path} onClick={() => pathHeaderClick(path)}> {path}</span>
                 
@@ -121,15 +114,12 @@ const Tests = props => {
             </ul>
         })
 
-        // return topPath.map((path,i) => {
-        //     const pathId = removeRootPathFromPath(path)
-        //     return <div id={pathId} className="path-item" onClick={() => clickPathItem(pathId,path)}>{pathId}</div>
-        // })
     }
 
     const setTest = (path,file) => {
         let fullPath = path+"/"+file
         setActiveTest(fullPath)
+        setTestOutput(null)
 
         if(activeTest)
             document.getElementById(activeTest).classList.remove("active-path-item")
@@ -153,6 +143,10 @@ const Tests = props => {
             }
         })
     }
+
+    ipcRenderer.on('test-output', (event, data) => {
+        setTestOutput(data)
+    })
     
 
     const displayActiveTestHeader = () => {
@@ -191,6 +185,7 @@ const Tests = props => {
                 </div>
                 <div className="active-test-contents">
                     {fileContents && displayFileContents()}
+                    {fileContents &&  <textarea value={testOutput ? testOutput : "No output yet"} readonly className="test-ooutput-textarea p-2"></textarea> }
                 </div>
             </div>
 

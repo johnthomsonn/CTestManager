@@ -10,6 +10,23 @@ const fs = require('fs')
 const spawn = require('child_process').spawn
 let mainWindow 
 
+// set to true if running from home or false if running from work.
+// this will change the hardcoded paths
+const DEV_HOME = true
+
+let testsRoot = undefined
+let reportsRoot = undefined
+
+if(DEV_HOME){
+     testsRoot = "C:\\Users\\JT\\Desktop\\dev\\electron\\testfiles"
+     reportsRoot = "C:\\Users\\JT\\Desktop\\dev\\electron\\results"
+}
+else
+{
+    testsRoot = "C:\\Users\\john.thomson\\Desktop\\github\\testfiles"
+    reportsRoot = "C:\\Users\\john.thomson\\Desktop\\github\\results"
+}
+
 const menuItems = [
     {
         label : "File",
@@ -109,8 +126,7 @@ const createWindow = () => {
     mainWindow.loadURL(isDev ? "http://localhost:3000" : path.join(__dirname, "../build/index.html") )
     exports.mainWindow
 }
-const testsRoot = "C:\\Users\\JT\\Desktop\\dev\\electron\\testfiles"
-const reportsRoot = "C:\\Users\\JT\\Desktop\\dev\\electron\\results"
+
 app.on("ready",() => {
 
     createWindow()
@@ -173,7 +189,15 @@ app.on("ready",() => {
         try {
             const combinedPath = testsRoot + "/"+ path.trim()
             console.log(combinedPath)
-            spawn('python', [combinedPath])
+            const process = spawn('python', [combinedPath])
+
+            process.stdout.on('data', data => {
+                event.reply('test-output', data.toString())
+            })
+
+            process.on('close', code => {
+                console.log(`Child process for ${path} finished with exit code ${code}`)
+            })
 
         }
         catch(e) {
