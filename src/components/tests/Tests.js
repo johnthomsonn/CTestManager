@@ -184,8 +184,10 @@ const Tests = props => {
                     Active Test: {displayActiveTestHeader()}
                 </div>
                 <div className="active-test-contents">
+                    <div className="w-100">
                     {fileContents && displayFileContents()}
                     {fileContents &&  <textarea value={testOutput ? testOutput : "No output yet"} readonly className="test-ooutput-textarea p-2"></textarea> }
+                    </div>
                 </div>
             </div>
 

@@ -37,6 +37,7 @@
   max-height: 500px;
   border: 1px solid grey;
   margin-top: 1rem;
+  padding: 0.5rem;
 }
 
 .job-info {

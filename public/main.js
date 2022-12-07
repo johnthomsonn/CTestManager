@@ -38,8 +38,15 @@ const menuItems = [
                 type : "separator"
             },
             {
+                label:"Relaunch",
+                click () {
+                    app.relaunch()
+                }
+            },
+            {
                 role : "quit"           
             }
+
             // {
             //     label : "New Window",
             //     click : async () => {
@@ -202,6 +209,38 @@ app.on("ready",() => {
 
         }
         catch(e) {
+            console.log(e)
+        }
+    })
+
+    ipcMain.on('run-job', async(event,jobList) => {
+        try {
+            const fullPaths = jobList.map(test => testsRoot+"/"+test.trim())
+            let lastProcess = null
+            await fullPaths.forEach(async test => {
+                console.log("satrt" + test)
+                let p =  spawn('python', [test])
+                lastProcess = p
+                await p.on('exit', code => {
+                    console.log(`Child process for ${test} has finished`)
+                    return
+                })
+                console.log("finish " + test)
+            })
+            if(lastProcess !==null)
+            {
+                lastProcess.on('close', code => {
+                    console.log(`Child process for the last test finished with exit code ${code}. I think the job is done.`)
+                    new Notification({title:"Job Finished", body: `Job has finished`}).show()
+                })
+            }
+            else
+            {
+                console.log("Last process is null, has it worked?")
+            }
+            
+        }
+        catch(e){
             console.log(e)
         }
     })

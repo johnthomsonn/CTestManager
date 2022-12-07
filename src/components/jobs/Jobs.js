@@ -122,8 +122,18 @@ const Jobs = props=> {
 
     const addJobToJobList = () => {
         if(!selectedTest) return
-        setJobTestList(p => [...p,selectedTest])
-        setSelectedTest(null)
+        if(!jobTestList.includes(selectedTest))
+        {
+            setJobTestList(p => [...p,selectedTest])
+            setSelectedTest(null)
+        }
+
+    }
+
+    const runJob = () => {
+        if(jobTestList.length ===0) return
+
+        ipcRenderer.send('run-job',jobTestList)
     }
 
     return (<>
@@ -143,8 +153,8 @@ const Jobs = props=> {
                 </div>
                 <div className="test-reports-explorer-buttons">
                     <button className="set-global-param-btn" onClick={() => addJobToJobList()}>Add To Job</button>
-                    <button className="set-active-test-btn" >Save Job</button>
-                    <button className="run-job-btn" >Run Job</button>
+                    <button className="set-active-test-btn" >{jobOptionTab === "tests" ? "Save Job" : "Load Job"}</button>
+                    <button className="run-job-btn"onClick={runJob}>Run Job</button>
                 </div>
             </div>
             
