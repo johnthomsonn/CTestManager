@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import Jobs from "../jobs/Jobs"
 import TestReports from "../reports/TestReports"
 import Tests from "../tests/Tests"
 import "./Main.css"
@@ -36,7 +37,7 @@ return(<>
 
         <div className="main-window-content">
             {activeTab === "" || activeTab === "tests" && <Tests {...props} /> }
-            {activeTab === "jobs" && <div>Showing Jobs</div>}
+            {activeTab === "jobs" && <Jobs {...props} />}
             {activeTab === "reports" && <TestReports {...props} />}
         </div>
     </div>
