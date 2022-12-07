@@ -1,4 +1,4 @@
-const {BrowserWindow,app,ipcMain, Menu} = require("electron")
+const {BrowserWindow,app,ipcMain, Menu, Notification} = require("electron")
 // const {createMenu} = require("./menus/MainMenu")
 require('@electron/remote/main').initialize()
 const path = require('path')
@@ -197,6 +197,7 @@ app.on("ready",() => {
 
             process.on('close', code => {
                 console.log(`Child process for ${path} finished with exit code ${code}`)
+                new Notification({title:"Test Finished", body: `${path} has finished`}).show()
             })
 
         }
