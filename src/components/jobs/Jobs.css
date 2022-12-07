@@ -1,0 +1,67 @@
+.job-option-tab {
+  height: 40px;
+  display: flex;
+  width: 90%;
+  border-bottom: 1px solid black;
+}
+.job-option-tab .show-tests {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.job-option-tab .show-tests:hover {
+  background-color: #f7cbcb !important;
+  cursor: pointer;
+}
+.job-option-tab .show-jobs {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid black;
+}
+.job-option-tab .show-jobs:hover {
+  background-color: #f1b0b0 !important;
+  cursor: pointer;
+}
+
+.active-test-contents {
+  margin-top: 0.5rem;
+  display: flex;
+}
+
+.job-test-list {
+  background-color: azure;
+  min-height: 200px;
+  max-height: 500px;
+  border: 1px solid grey;
+  margin-top: 1rem;
+}
+
+.job-info {
+  background-color: aliceblue;
+  width: 50%;
+  height: 400px;
+  margin-left: 0.5rem;
+  border: 1px solid grey;
+  padding: 0.5rem;
+}
+.job-info input {
+  margin-left: 1rem;
+  width: 300px;
+}
+
+.job-list-div {
+  width: 30%;
+}
+
+.run-job-btn {
+  background-color: #5fc55f;
+  border: none;
+  border-radius: 20px;
+  color: white;
+}
+.run-job-btn:hover {
+  background-color: #4ba14b;
+}

@@ -1,0 +1,70 @@
+
+@mixin center-text() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.job-option-tab {
+    height:40px;
+    display: flex;
+    width:90%;
+    .show-tests {
+        width:50%;
+        @include center-text();
+        &:hover {
+            background-color: rgb(247, 203, 203) !important;
+            cursor: pointer;
+        }
+    }
+    .show-jobs {
+        width:50%;
+        @include center-text();
+        border-left:1px solid black;
+        &:hover {
+            background-color: rgb(241, 176, 176) !important;
+            cursor: pointer;
+        }
+    }
+    border-bottom:1px solid black;
+}
+.active-test-contents {
+    margin-top: 0.5rem;
+    display: flex;
+}
+
+.job-test-list {
+    background-color: azure;
+    min-height:200px;
+    max-height:500px;
+    border:1px solid grey;
+    margin-top:1rem;
+}
+
+.job-info {
+    background-color: aliceblue;
+    width:50%;
+    height:400px;
+    margin-left: 0.5rem;
+    border:1px solid grey;
+    padding:0.5rem;
+    input {
+        margin-left:1rem;
+        width:300px;
+    }
+}
+
+.job-list-div {
+    width: 30%;
+}
+
+.run-job-btn {
+    background-color: rgb(95, 197, 95);
+    border:none;
+    border-radius: 20px;
+    color: white;
+    &:hover {
+        background-color: rgb(75, 161, 75);
+
+    }
+}
