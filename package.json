@@ -1,6 +1,7 @@
 {
   "name": "ctestmanager",
   "version": "0.2.0",
+  "author" : "John Thomson",
   "private": true,
   "dependencies": {
     "@electron/remote": "github:electron/remote",

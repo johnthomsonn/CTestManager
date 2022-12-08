@@ -7,7 +7,7 @@ import About from "./components/about/About";
 function App(props) {
   return (<>
     
-      <BrowserRouter basename="/">
+      <HashRouter basename="/">
 
         <Routes>
 
@@ -16,7 +16,7 @@ function App(props) {
 
         </Routes>
       
-      </BrowserRouter>
+      </HashRouter>
     
   </>);
 }
