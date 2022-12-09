@@ -2,8 +2,8 @@ const {BrowserWindow,app,ipcMain, Menu, Notification} = require("electron")
 // const {createMenu} = require("./menus/MainMenu")
 require('@electron/remote/main').initialize()
 const path = require('path')
+const url = require('url')
 const isDev = require('electron-is-dev')
-const { getFileStructure } = require("./methods/FileStructureMethods")
 const walkdir = require('walkdir')
 const dir = require("node-dir")
 const fs = require('fs')
@@ -12,7 +12,7 @@ let mainWindow
 
 // set to true if running from home or false if running from work.
 // this will change the hardcoded paths
-const DEV_HOME = true
+const DEV_HOME = false
 
 let testsRoot = undefined
 let reportsRoot = undefined
@@ -130,7 +130,16 @@ const createWindow = () => {
             preload : path.join(__dirname, "preloads/mainWindowPreload.js")
         }
     })
-    mainWindow.loadURL(isDev ? "http://localhost:3000" : path.join(__dirname, "../build/index.html") )
+    
+    const appURL = app.isPackaged ? url.format({
+        pathname : path.join(__dirname, "index.html"),
+        protocol : "file:",
+        slashes : true
+    }) 
+    :
+    "http://localhost:3000"
+
+    mainWindow.loadURL(appURL)
     exports.mainWindow
 }
 
